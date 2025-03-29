@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roshika's Surprise</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        #name {
+            font-size: 50px;
+            color: #ff69b4;
+            animation: glow 2s infinite;
+            margin-bottom: 20px;
+        }
+        #message {
+            font-size: 20px;
+            text-align: center;
+            max-width: 600px;
+            color: #fff;
+        }
+        #heart {
+            font-size: 40px;
+            color: #ff0000;
+            margin-top: 20px;
+            animation: pulse 1s infinite;
+        }
+        #surprise-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #ff69b4;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #surprise-btn:hover {
+            background-color: #ff1493;
+        }
+        #explosion {
+            position: absolute;
+            font-size: 50px;
+            color: #ff0000;
+            display: none;
+        }
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px #ff69b4; }
+            50% { text-shadow: 0 0 20px #ff1493; }
+            100% { text-shadow: 0 0 10px #ff69b4; }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div id="name">Roshika</div>
+    <div id="message"></div>
+    <div id="heart">❤️</div>
+    <button id="surprise-btn" onclick="showSurprise()">Want a Surprise?</button>
+    <div id="explosion"></div>
+
+    <script>
+        const messageElement = document.getElementById('message');
+        const fullMessage = "Dear Roshika, you’re the spark that lights up my world, the perfect code to my heart. Every moment with you feels like an infinite loop of happiness—I’m so lucky to have you!";
+        let index = 0;
+
+        function typeMessage() {
+            if (index < fullMessage.length) {
+                messageElement.innerHTML += fullMessage.charAt(index);
+                index++;
+                setTimeout(typeMessage, 50); // Typing speed
+            }
+        }
+
+        function showSurprise() {
+            const explosion = document.getElementById('explosion');
+            explosion.style.display = 'block';
+            document.getElementById('surprise-btn').style.display = 'none';
+            let hearts = '';
+            for (let i = 0; i < 20; i++) {
+                hearts += '❤️ ';
+            }
+            explosion.innerHTML = hearts;
+
+            // Animate hearts across the screen
+            let pos = 0;
+            const interval = setInterval(() => {
+                pos -= 10;
+                explosion.style.top = `${Math.random() * 80 + 10}vh`;
+                explosion.style.left = `${pos}vw`;
+                if (pos < -100) {
+                    clearInterval(interval);
+                    explosion.innerHTML = "Roshika, I’m crazy about you! ❤️";
+                    explosion.style.left = '50%';
+                    explosion.style.top = '80%';
+                    explosion.style.transform = 'translateX(-50%)';
+                }
+            }, 100);
+        }
+
+        // Start typing the message when the page loads
+        window.onload = typeMessage;
+    </script>
+</body>
+</html>
